@@ -1,7 +1,7 @@
 {
-  "name": "react-native-gifted-chat",
+  "name": "@hatkom/react-native-gifted-chat",
   "version": "2.4.0",
-  "description": "The most complete chat UI for React Native",
+  "description": "Fork of react-native-gifted-chat with fixes",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
@@ -85,5 +85,6 @@
     "hooks": {
       "pre-commit": "yarn lint:fix && yarn prettier && yarn tsc"
     }
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
