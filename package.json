@@ -1,6 +1,6 @@
 {
   "name": "@hatkom/react-native-gifted-chat",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Fork of react-native-gifted-chat with fixes",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
