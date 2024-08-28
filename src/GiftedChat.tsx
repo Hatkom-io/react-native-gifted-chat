@@ -453,7 +453,9 @@ function GiftedChat<TMessage extends IMessage = IMessage>(
   }
 
   const renderMessages = () => {
-    const newMessagesContainerHeight = getMessagesContainerHeightWithKeyboard(minComposerHeight)
+    const newMessagesContainerHeight = getMessagesContainerHeightWithKeyboard(
+      minComposerHeight,
+    )
 
     const { messagesContainerStyle, ...messagesContainerProps } = props
 
