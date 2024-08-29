@@ -79,16 +79,6 @@
   </p>
 </p>
 
-## The future of GiftedChat 🎉
-
-Please give us your advice: [Related PR](https://github.com/FaridSafi/react-native-gifted-chat/pull/1775)
-
-## Please vote
-
-**GiftedChat** depends on other packages and some needs a boost, please vote for PRs will improve it, thanks:
-
-- https://github.com/watadarkstar/react-native-typing-animation/issues/18
-
 ## Features
 
 - 🎉 **_`react-native-web`able_ (since 0.10.0)** [web configuration](#react-native-web)
@@ -105,13 +95,44 @@ Please give us your advice: [Related PR](https://github.com/FaridSafi/react-nati
 - Redux support
 - System message
 - Quick Reply messages (bot)
-- Typing indicator [react-native-typing-animation](https://github.com/watadarkstar/react-native-typing-animation)
+- Typing indicator
 
-## Dependency
+# Getting started
 
-- Use version `0.2.x` for RN `>= 0.44.0`
-- Use version `0.1.x` for RN `>= 0.40.0`
-- Use version `0.0.10` for RN `< 0.40.0`
+## Installation
+
+### Install dependencies
+
+Yarn:
+```bash
+yarn add react-native-gifted-chat react-native-reanimated react-native-safe-area-context
+```
+
+Npm:
+
+```bash
+npm install --save react-native-gifted-chat react-native-reanimated react-native-safe-area-context
+```
+
+Expo
+```bash
+npx expo install react-native-gifted-chat react-native-reanimated react-native-safe-area-context
+```
+
+### Non-expo users
+
+```bash
+npx pod-install
+```
+
+### Setup react-native-safe-area-context
+
+Follow guide: [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context?tab=readme-ov-file#api)
+
+### react-native-video and expo-av
+
+- Both dependencies are removed since `0.11.0`.
+- You still be able to provide a `video` but you need to provide `renderMessageVideo` prop.
 
 ## Testing
 `TEST_ID` is exported as constants that can be used in your testing library of choice
@@ -132,16 +153,6 @@ fireEvent(loadingWrapper, 'layout', {
   },
 })
 ```
-
-## Installation
-
-- Using [npm](https://www.npmjs.com/#getting-started): `npm install react-native-gifted-chat --save`
-- Using [Yarn](https://yarnpkg.com/): `yarn add react-native-gifted-chat`
-
-### react-native-video and expo-av
-
-- Both dependencies are removed since `0.11.0`.
-- You still be able to provide a `video` but you need to provide `renderMessageVideo` prop.
 
 ## You have a question?
 
@@ -264,7 +275,7 @@ See PR [#1211](https://github.com/FaridSafi/react-native-gifted-chat/pull/1211)
 interface Reply {
   title: string
   value: string
-  messageId?: any
+  messageId?: number | string
 }
 
 interface QuickReplies {
@@ -346,7 +357,6 @@ interface QuickReplies {
 - **`timeFormat`** _(String)_ - Format to use for rendering times; default is `'LT'` (see [Day.js Format](https://day.js.org/docs/en/display/format))
 - **`dateFormat`** _(String)_ - Format to use for rendering dates; default is `'ll'` (see [Day.js Format](https://day.js.org/docs/en/display/format))
 - **`loadEarlier`** _(Bool)_ - Enables the "load earlier messages" button, required for `infiniteScroll`
-- **`isKeyboardInternallyHandled`** _(Bool)_ - Determine whether to handle keyboard awareness inside the plugin. If you have your own keyboard handling outside the plugin set this to false; default is `true`
 - **`onLoadEarlier`** _(Function)_ - Callback when loading earlier messages
 - **`isLoadingEarlier`** _(Bool)_ - Display an `ActivityIndicator` when loading earlier messages
 - **`renderLoading`** _(Function)_ - Render a loading view when initializing
@@ -361,7 +371,7 @@ interface QuickReplies {
 - **`renderTicks`** _(Function(`message`))_ - Custom ticks indicator to display message status
 - **`renderSystemMessage`** _(Function)_ - Custom system message
 - **`onPress`** _(Function(`context`, `message`))_ - Callback when a message bubble is pressed
-- **`onLongPress`** _(Function(`context`, `message`))_ - Callback when a message bubble is long-pressed; default is to show an ActionSheet with "Copy Text" (see [example using `showActionSheetWithOptions()`](https://github.com/FaridSafi/react-native-gifted-chat/blob/master@%7B2017-09-25%7D/src/Bubble.js#L96-L119))
+- **`onLongPress`** _(Function(`context`, `message`))_ - Callback when a message bubble is long-pressed (see [example using `showActionSheetWithOptions()`](https://github.com/FaridSafi/react-native-gifted-chat/blob/master@%7B2017-09-25%7D/src/Bubble.js#L96-L119))
 - **`inverted`** _(Bool)_ - Reverses display order of `messages`; default is `true`
 - **`renderUsernameOnMessage`** _(Bool)_ - Indicate whether to show the user's username inside the message bubble; default is `false`
 - **`renderUsername`** _(Function)_ - Custom Username container
@@ -385,7 +395,6 @@ interface QuickReplies {
 - **`renderSend`** _(Function)_ - Custom send button; you can pass children to the original `Send` component quite easily, for example, to use a custom icon ([example](https://github.com/FaridSafi/react-native-gifted-chat/pull/487))
 - **`renderAccessory`** _(Function)_ - Custom second line of actions below the message composer
 - **`onPressActionButton`** _(Function)_ - Callback when the Action button is pressed (if set, the default `actionSheet` will not be used)
-- **`bottomOffset`** _(Integer)_ - Distance of the chat from the bottom of the screen (e.g. useful if you display a tab bar)
 - **`minInputToolbarHeight`** _(Integer)_ - Minimum height of the input toolbar; default is `44`
 - **`listViewProps`** _(Object)_ - Extra props to be passed to the messages [`<ListView>`](https://facebook.github.io/react-native/docs/listview.html); some props can't be overridden, see the code in `MessageContainer.render()` for details
 - **`textInputProps`** _(Object)_ - Extra props to be passed to the [`<TextInput>`](https://facebook.github.io/react-native/docs/textinput.html)
@@ -546,6 +555,7 @@ Feel free to ask me questions on Twitter [@FaridSafi](https://www.twitter.com/Fa
 - Kfir Golan [kfiroo](https://github.com/kfiroo)
 - Bruno Cascio [brunocascio](https://github.com/brunocascio)
 - Xavier Carpentier [xcarpentier](https://github.com/xcarpentier)
+- Kesha Antonov [kesha-antonov](https://github.com/kesha-antonov)
 - [more](https://github.com/FaridSafi/react-native-gifted-chat/graphs/contributors)
 
 ## Hire an expert!
