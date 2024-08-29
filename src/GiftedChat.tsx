@@ -143,6 +143,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   /* infinite scroll up when reach the top of messages container, automatically call onLoadEarlier function if exist */
   infiniteScroll?: boolean
   timeTextStyle?: LeftRightStyle<TextStyle>
+  keyboardHeight?: number
+  tabBarHeight?: number
   /* Custom action sheet */
   actionSheet?(): {
     showActionSheetWithOptions: (
@@ -252,6 +254,8 @@ function GiftedChat<TMessage extends IMessage = IMessage> (
     onInputTextChanged = null,
     maxInputLength = null,
     inverted = true,
+    tabBarHeight = 0,
+    keyboardHeight = 0,
     minComposerHeight = MIN_COMPOSER_HEIGHT,
     maxComposerHeight = MAX_COMPOSER_HEIGHT,
   } = props
@@ -281,16 +285,22 @@ function GiftedChat<TMessage extends IMessage = IMessage> (
   const trackingKeyboardMovement = useSharedValue(false)
   const debounceEnableTypingTimeoutId = useRef<ReturnType<typeof setTimeout>>()
   const insets = useSafeAreaInsets()
-  const keyboardOffsetBottom = useSharedValue(0)
+  const keyboardOffsetBottom = useSharedValue(keyboardHeight)
 
-  const contentStyleAnim = useAnimatedStyle(
-    () => ({
-      transform: [
-        { translateY: -keyboard.height.value + keyboardOffsetBottom.value },
-      ],
-    }),
-    [keyboard, keyboardOffsetBottom]
-  )
+  useEffect(() => {
+		keyboardOffsetBottom.value = keyboardHeight
+	}, [keyboardHeight, keyboardOffsetBottom])
+
+  const contentStyleAnim = useAnimatedStyle(() => {
+      const { value } = keyboardOffsetBottom
+      const offset = value === 0 ? 0 : (keyboard.height.value / value) * tabBarHeight
+
+      return {
+          transform: [
+              { translateY: -keyboard.height.value + offset },
+          ],
+      }
+  }, [keyboard, keyboardOffsetBottom]);
 
   const getTextFromProp = useCallback(
     (fallback: string) => {
@@ -366,10 +376,6 @@ function GiftedChat<TMessage extends IMessage = IMessage> (
   )
 
   const renderMessages = useMemo(() => {
-    // const newMessagesContainerHeight = getMessagesContainerHeightWithKeyboard(
-    //   minComposerHeight,
-    // )
-
     if (!isInitialized)
       return null
 
@@ -559,12 +565,6 @@ function GiftedChat<TMessage extends IMessage = IMessage> (
         const isKeyboardMovingUp = value > prevValue
         if (isKeyboardMovingUp !== trackingKeyboardMovement.value) {
           trackingKeyboardMovement.value = isKeyboardMovingUp
-          keyboardOffsetBottom.value = withTiming(
-            isKeyboardMovingUp ? insets.bottom : 0,
-            {
-              duration: 400,
-            }
-          )
 
           if (isKeyboardMovingUp)
             runOnJS(handleTextInputFocusWhenKeyboardShow)()
